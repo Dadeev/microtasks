@@ -48,45 +48,21 @@ function App() {
         ]
     });
 
-
-    function removeTask(id: string) {
-
-
-        // let copy = {...tasks[todolistID]}
-        // tasks[todolistID] = copy.filter(t=> t.id !== id)
-        // setTasks(tasks)
-
-        // let filteredTasks = tasks.filter(t => t.id != id);
-        // setTasks(filteredTasks);
+    function removeTask(id: string, todolistID: string) {
+        setTasks({...tasks, [todolistID]: tasks[todolistID].filter(t => t.id !== id)})
     }
 
-    function addTask(title: string) {
-        // let task = {id: v1(), title: title, isDone: false};
-        // let newTasks = [task, ...tasks];
-        // setTasks(newTasks);
+    function addTask(title: string, todolistID: string) {
+        let newTask = {id: v1(), title: title, isDone: false}
+        setTasks({...tasks, [todolistID]: [newTask, ...tasks[todolistID]]})
     }
 
-    function changeStatus(taskId: string, isDone: boolean) {
-        // let task = tasks.find(t => t.id === taskId);
-        // if (task) {
-        //     task.isDone = isDone;
-        // }
-        //
-        // setTasks([...tasks]);
+    function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone: isDone} : t)})
     }
-
-
-    // let tasksForTodolist = tasks;
-
-    // if (filter === "active") {
-    //     tasksForTodolist = tasks.filter(t => t.isDone === false);
-    // }
-    // if (filter === "completed") {
-    //     tasksForTodolist = tasks.filter(t => t.isDone === true);
-    // }
 
     function changeFilter(value: FilterValuesType, todolistID: string) {
-        setTodolists(todolists.map(tl => tl.id === todolistID ? {...tl, filter : value} : tl))
+        setTodolists(todolists.map(f => f.id === todolistID ? {...f, filter: value} : f))
     }
 
     return (
